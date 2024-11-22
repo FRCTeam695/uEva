@@ -10,6 +10,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.TankDriveSubsystem;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.LEDandServoSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +39,8 @@ public class RobotContainer {
   private final MotorSubsystem m_motorSubsystem = new MotorSubsystem(m_driverController);
 
   private final LEDandServoSubsystem m_LEDandServoSubsystem = new LEDandServoSubsystem(m_driverController);
+
+  private final SwerveDriveSubsystem m_SwerveDriveSubsystem = new SwerveDriveSubsystem();
 
   //private final TankDriveSubsystem m_TankDriveSubsystem = new TankDriveSubsystem(m_driverController);
 
@@ -83,6 +86,15 @@ public class RobotContainer {
         .andThen(m_LEDandServoSubsystem.servo_On())
         .andThen(new WaitCommand(2.0))
         .andThen(m_LEDandServoSubsystem.servo_Off())
+    );
+
+    //swerve drive
+    m_SwerveDriveSubsystem.setDefaultCommand(
+      m_SwerveDriveSubsystem.runSwerveCommand(
+        () -> m_driverController.getRawAxis(1),
+        () -> m_driverController.getRawAxis(0), 
+        () -> m_driverController.getRawAxis(4)
+      )
     );
 
     //arcade drive

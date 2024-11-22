@@ -23,7 +23,6 @@ import com.revrobotics.CANSparkBase;
 
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 
@@ -82,8 +81,8 @@ public class MotorSubsystem extends SubsystemBase {
     // when the robot program starts
     exampleController = controller;
 
-    motor = new CANSparkFlex(55, MotorType.kBrushless);
-    pidController = motor.getPIDController();
+    //motor = new CANSparkFlex(55, MotorType.kBrushless);
+    //pidController = motor.getPIDController();
 
   }
   
@@ -122,7 +121,7 @@ public class MotorSubsystem extends SubsystemBase {
      
       // ** EXECUTE
       ()-> {
-      if(limitSwitch.get()) {
+      if(!limitSwitch.get()) {
         motor.set(0);
         System.out.println("the limit switch is on");
       }
@@ -184,7 +183,7 @@ public class MotorSubsystem extends SubsystemBase {
 
   private void testExecute8()
   {
-    if(!limitSwitch.get()) {
+    if(limitSwitch.get()) {
     // Set the pid controller values
     pidController.setP(kP);
     pidController.setI(kI);
@@ -199,10 +198,11 @@ public class MotorSubsystem extends SubsystemBase {
     pidController.setReference(2000, CANSparkBase.ControlType.kVelocity);
     SmartDashboard.putNumber("Motor Speed", motor.getEncoder().getVelocity());
     }
-    
-    if(limitSwitch.get()){
+
+    if(!limitSwitch.get()){
       motor.set(0);
     }
+
   }
 
   private void testInterrupt8()
@@ -212,6 +212,8 @@ public class MotorSubsystem extends SubsystemBase {
 
   private boolean testEndCondition8()
   {
+    if(!limitSwitch.get())
+      return (true);
     return(false);
   }
 

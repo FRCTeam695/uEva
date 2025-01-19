@@ -24,7 +24,7 @@ else:
     print("Failed to connect to NetworkTables server")
 
 # creates table and sets to none
-sidecarTables = NetworkTables.getTable("Reef Scoring")
+sidecarTables = NetworkTables.getTable("sidecarTables")
 sidecarTables.putString("locationPicked", "none")
 
 # new interface window
